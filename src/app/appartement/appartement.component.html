@@ -1,0 +1,348 @@
+<div class="nav-top">
+  <div class="container" >
+    <div class="row">
+      <div class="col-10 mx-auto">
+
+        <h3 class="m-0"><span class="fw-bolder">IMMOPOTAM</span><small class="text-secondary fw-lighter fs-5"> by Marc & Sophie</small></h3>
+        <ul class="nav nav-pills">
+          <a class="nav-link" [ngClass]="{'active' : nav == 'annonce'}" (click)="navigate('annonce')">Annonce</a>
+          <a class="nav-link" [ngClass]="{'active' : nav == 'depenses'}" (click)="navigate('depenses')">Dépenses</a>
+          <a class="nav-link" [ngClass]="{'active' : nav == 'financement'}" (click)="navigate('financement')">Financement</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container container-nav">
+  <div class="row">
+    <div class="col-lg-10 mx-auto pt-5">
+
+      <a [routerLink]="['/liste']" class="link-back "><i class="bi bi-chevron-left"></i> Retour à la Liste</a>
+
+      <div class="mt-4" >
+        <div *ngIf="modifier == false">
+          <div class="d-flex flex-column flex-lg-row h-100 justify-content-between">
+            <div class="">
+              <h4 class = "fw-bolder text-uppercase mb-0">{{appartement.nom}}</h4>
+            </div>
+            <div class="mt-2 mt-md-0">
+              <button class="  btn btn-sm btn-secondary" *ngIf="afficherModifier == true" (click)="toggleModifier()"><i class="bi bi-pencil"></i> Modifier</button>
+              <button class="ms-3 btn btn-sm btn-success" (click)="db.save()"><i class="bi bi-floppy"></i> Enregistrer</button>
+              <button class="ms-3 btn btn-sm btn-danger" (click)="db.remove(appartement.id)"><i class="bi bi-trash3"></i> Supprimer</button>
+            </div>
+          </div>
+          <a href="{{appartement.lien}}" target="_blank" class = "d-none d-md-block">{{appartement.lien}}</a>
+        </div>
+        <div class="row" *ngIf="modifier == true">
+          <div class="col-4">
+            <label>Nom : </label>
+            <input type="text" class="form-control" [(ngModel)]="appartement.nom">
+          </div>
+          <div class="col">
+            <label>Lien : </label>
+            <input type="text" class="form-control" [(ngModel)]="appartement.lien">
+          </div>
+          <div class="col">
+            <label>Image : </label>
+            <input type="text" class="form-control" [(ngModel)]="appartement.image">
+          </div>
+          <div class="col-2 d-flex align-items-end">
+            <button class="  btn  btn-secondary" *ngIf="afficherModifier == true" (click)="toggleModifier()">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div *ngIf="nav=='annonce'">
+
+        <div *ngIf="modifier == false" class="mt-4 d-flex">
+          <img src="{{appartement.image}}"  class="img-fluid rounded me-2" style = "width : 50% " >
+
+          <div id = "map" class = " rounded ms-2" style = "width : 50%;"></div>
+        </div>
+
+        <div class="card mt-4 mb-5" style = "font-size : .9rem">
+          <div class="card-body">
+
+            <div class="row mb-3">
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Origine : </label>
+                <select class="form-control" [(ngModel)]="appartement.origine">
+                  <option value="Leboncoin">Leboncoin</option>
+                  <option value="Ebay">Ebay</option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Ville : </label>
+                <select class="form-control" [(ngModel)]="appartement.ville">
+                  <option value="strasbourg-67000">Strasbourg</option>
+                  <option value="colmar-68000">Colmar</option>
+                  <option value="selestat-67600">Sélestat</option>
+                  <option value="obernai-67210">Obernai</option>
+                  <option value="barr-67140">Barr</option>
+                  <option value="saint-die-des-vosges-88100">Saint-Dié</option>
+                </select>
+              </div>
+
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Pièces : </label>
+                <input class="form-control " [(ngModel)]="appartement.pieces" type = "number">
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Surface : </label>
+                <input class="form-control " [(ngModel)]="appartement.surface" type = "number">
+              </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Prix de Vente : </label>
+                <input class="form-control " [(ngModel)]="appartement.prix" type = "number">
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Honnoraires : </label>
+                <input class="form-control " [(ngModel)]="appartement.honnoraires" type = "number">
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Classe Energie : </label>
+                <select class="form-control" [(ngModel)]="appartement.classeE">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Classe GES : </label>
+                <select class="form-control" [(ngModel)]="appartement.classeGES">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Charges Copropriété : </label>
+                <input class="form-control " [(ngModel)]="appartement.charges.copro" type = "number">
+              </div>
+              <div class="col-lg-3 col-6 ">
+                <label class="form-label">Charges Energie : </label>
+                <input class="form-control " [(ngModel)]="appartement.charges.energie" type = "number">
+              </div>
+            </div>
+
+            <div class="">
+              <label>Description : </label>
+              <textarea class="form-control mt-2" rows="12" cols="80" [(ngModel)]="appartement.description"></textarea>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="mt-4 card" *ngIf="nav=='depenses'">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <b>Intitulé</b>
+            </div>
+            <div class="col-3">
+              <b>Montant</b>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-sm btn-success w-100" (click)="ajouterDepense()"><i class="bi bi-plus-circle"></i> Ajouter</button>
+            </div>
+          </div>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item" *ngFor="let depense of getDepenses(); let i = index">
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control border-0" [(ngModel)]="depense.intitule">
+              </div>
+              <div class="col-3">
+                <input type="number" class="form-control border-0" [(ngModel)]="depense.montant">
+              </div>
+              <div class="col-2">
+                <button class="btn btn-danger btn-sm w-100" (click)="appartement.depenses.list.splice(i, 1)"><i class="bi bi-trash3"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <div class="card mt-4" *ngIf="nav=='financement'">
+
+
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col">
+              <label>Prix Annonce : </label>
+              <input type="number" class="form-control" [(ngModel)]="appartement.prix">
+              <small class="text-secondary">Soit {{appartement.prix / appartement.surface | currency : '€/m2'}}</small>
+            </div>
+            <div class="col">
+              <label>Valeur Marché : </label>
+              <div class="d-flex">
+                <input type="number" class="form-control" [(ngModel)]="appartement.prixMarche">
+                <a href="https://www.meilleursagents.com/prix-immobilier/{{appartement.ville}}" target="_blank" class="ms-3 btn btn-outline-success"><i class="bi bi-binoculars-fill"></i></a>
+              </div>
+              <small class="text-secondary">Prix moyen du marché</small>
+            </div>
+            <div class="col">
+              <label>Prix d'achat retenu : </label>
+              <input type="number" class="form-control" [(ngModel)]="appartement.prixFinal" (change)="updateCredit()">
+              <small class="text-secondary"
+                [ngClass]="{'text-danger' : (appartement.prixFinal / appartement.surface) - appartement.prixMarche > 0}">
+                Soit {{ (appartement.prixFinal / appartement.surface) - appartement.prixMarche | currency : '€/m2'}} de différence
+              </small>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-top">
+            <b>Simulation crédit :</b>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label>Apport : </label>
+              <input type="number" class="form-control" [(ngModel)]="appartement.credit.apport" (change)="updateCredit()">
+            </div>
+            <div class="col">
+              <label>Taux (%) : </label>
+              <input type="number" class="form-control" [(ngModel)]="appartement.credit.taux" (change)="updateCredit()">
+            </div>
+            <div class="col">
+              <label>Durée (ans) : </label>
+              <input type="number" class="form-control" [(ngModel)]="appartement.credit.duree" (change)="updateCredit()">
+            </div>
+          </div>
+
+
+          <div class="mt-4 pt-3 border-top">
+            <div class="row">
+              <div class="col">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h4><i class="bi bi-calendar-event"></i></h4>
+                    <b>Mensualités</b> <br>
+                    {{appartement.credit.mensualites | currency : '€/mois'}}
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h4><i class="bi bi-bank"></i></h4>
+                    <b>Intérêts</b> <br>
+                    {{appartement.credit.interets | currency : '€'}}
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h4><i class="bi bi-cash-stack"></i></h4>
+                    <b>Coût Total</b> <br>
+                    {{appartement.credit.interets + appartement.prixFinal + appartement.depenses.total | currency : '€'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card mt-3 mb-5" *ngIf = "nav=='financement'">
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-body ">
+                  <h4 class="text-center"><i class="bi bi-house-add"></i></h4>
+                  <label>Loyer : </label>
+                  <div class="d-flex">
+                    <input type="number" class="form-control" [(ngModel)]="appartement.loyer" (change)="updateRendement()">
+                    <a href="https://www.seloger.com}}" target="_blank" class="ms-3 btn btn-outline-success"><i class="bi bi-binoculars-fill"></i></a>
+                  </div>
+                  <small class="text-secondary">Loyer mensuel annonce.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <div class="card-body ">
+                  <h4 class="text-center"><i class="bi bi-house-dash"></i></h4>
+                  <label>Charges Annuelles : </label>
+                  <input type="number" class="form-control" [(ngModel)]="appartement.charges.annuelles" (change)="updateRendement()">
+                  <small class="text-secondary">Ex : assurance</small>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <div class="d-flex flex-column h-100">
+                    <h4 class="text-center "><i class="bi bi-percent"></i></h4>
+                    <h4 class = "my-auto">Rendement : <small>{{appartement.rendement | percent}}</small> </h4>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

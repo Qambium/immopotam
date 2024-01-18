@@ -1,0 +1,148 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+
+  --sidebar-width-open : 200px;
+  --sidebar-width-close : 50px;
+
+  --menu-width : 400px;
+}
+
+body, .dropdown-toogle, .btn {
+    font-size: .8rem;
+    /* font-family: 'Helvetica Neue'; */
+}
+
+
+
+  #map {
+    position: absolute;
+    /* top:0; */
+    /* left:0; */
+    width : 100%;
+    height: 100%;
+    /* z-index: 700; */
+
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+
+
+.sidebar-wrapper {
+  width : 100vw;
+  height : 100vh;
+  background: red;
+
+  display: flex;
+}
+
+
+.sidebar-wrapper .sidebar {
+  width : calc(var(--sidebar-width-open) + 50px);
+  background-color: var(--bs-gray-100);
+  height: 100%;
+  position: fixed;
+  z-index: 500;
+}
+
+.sidebar-wrapper .sidebar-content {
+  /* position: fixed; */
+  height: 100%;
+  background: #fff;
+  z-index: 600;
+  width: calc(100vw - var(--sidebar-width-close));
+  margin-left: var(--sidebar-width-close);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.075);
+  overflow-y: scroll;
+
+  transition-property: margin, width ;
+  transition-duration: .5s;
+  transition-delay: 0s;
+
+}
+
+.sidebar-wrapper.open .sidebar-content {
+  width: calc(100vw - var(--sidebar-width-open));
+  margin-left: var(--sidebar-width-open);
+
+  /* transition: margin-left .5s .25s;
+  transition: width .5s .25s; */
+}
+
+
+
+.sidebar .sidebar-title {
+  font-size: 1.2rem;
+
+}
+
+.sidebar .dropdown:hover {
+  background: var(--bs-gray-300);
+}
+
+
+
+
+
+
+/* ________________ */
+
+
+.menu-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+  .menu-wrapper .menu {
+    height: 100%;
+    width : var(--menu-width);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    border-right : 1px solid #dee2e6;
+  }
+
+    .menu-wrapper .menu .menu-header {
+      border-bottom : 1px solid #dee2e6;
+      padding : .75rem;
+    }
+
+  .menu-wrapper .menu-content {
+    height: 100%;
+    width : 100%;
+    overflow-y: scroll;
+  }
+    .menu-wrapper .menu-content  #map {
+      border-top-left-radius: 1px !important;
+      border-bottom-left-radius: 1px !important;
+    }
+
+
+
+  .menu-wrapper .menu-content .overlay {
+    position: fixed;
+    background: purple;
+    top : 0;
+    /* left: 100vw; */
+    width: 100%;
+    /* left : calc(100vw - var(--sidebar-width-open) - var(--menu-width)); */
+    height: 100%;
+    /* position: fixed; */
+    z-index: 800;
+
+    transition-property: left;
+    transition-duration: 1s;
+    transition-delay: 0s;
+
+    overflow-y: scroll;
+
+  }
+
+  .menu-wrapper .menu-content .overlay.show {
+    left : 0;
+  }
