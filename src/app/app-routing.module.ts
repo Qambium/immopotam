@@ -8,9 +8,9 @@ import { MapComponent } from './map/map.component';
 const routes: Routes = [
 
   { path: 'map', component: MapComponent },
-  { path: 'liste', component: ListeComponent },
+  { path: '', component: ListeComponent },
   { path: 'appartement/:id', component: AppartementComponent },
-  { path: '',   redirectTo: '/liste', pathMatch: 'full' }
+  { path: 'liste',   redirectTo: '', pathMatch: 'full' }
 
 ];
 
