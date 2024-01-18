@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'map', component: MapComponent },
   { path: 'liste', component: ListeComponent },
   { path: 'appartement/:id', component: AppartementComponent },
-  // { path: '',   redirectTo: '/', pathMatch: 'full' }
+  { path: '',   redirectTo: '/liste', pathMatch: 'full' }
 
 ];
 
