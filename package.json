@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --deploy-url=https://qambium.fr/immo/ --base-href=/immo/",
+    "build": "ng build --deploy-url=https://qambium.fr/immopotam/ --base-href=/immopotam/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
